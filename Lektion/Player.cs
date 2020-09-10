@@ -1,6 +1,6 @@
 ﻿namespace Lektion
 {
-    public class Player : Guesser
+    public class Player
     {
         
     }

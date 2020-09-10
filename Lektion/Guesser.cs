@@ -1,13 +1,12 @@
 ﻿namespace Lektion
 {
-    public abstract class Guesser
+    public class Guesser
     {
-        protected GameManager manager = Program.instance.gameManager;
-        protected Response response;
-        
-        public virtual void Guess(int number)
+        private GameManager manager = Program.instance.gameManager;
+
+        public Response Guess(int number)
         {
-            response = manager.Guess(number);
+            return manager.Guess(number);
         }
         
         

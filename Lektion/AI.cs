@@ -1,16 +1,15 @@
 ﻿namespace Lektion
 {
-    public class AI : Guesser
+    public class AI
     {
         private int previousGuess;
 
-        private int GuessCeil;
-        private int GuessFloor;
+        private int GuessCeil = 100;
+        private int GuessFloor = 1;
         
-        public override void Guess(int number)
+        public void Guess(int number)
         {
-            base.Guess(number);
-            if (response == Response.HIGHER)
+            if (Program.instance.gameManager.Guess(number) == Response.HIGHER)
             {
                 
             }
