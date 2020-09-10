@@ -1,17 +1,56 @@
-﻿namespace Lektion
+﻿using System;
+using System.Threading;
+
+namespace Lektion
 {
     public class AI
     {
-        private int previousGuess;
+        private int _guessCeil = 100;
+        private int _guessFloor = 1;
 
-        private int GuessCeil = 100;
-        private int GuessFloor = 1;
+        private Random random = new Random();
         
-        public void Guess(int number)
+        private void Guess(int number)
         {
-            if (Program.instance.gameManager.Guess(number) == Response.HIGHER)
+            var response = Program.instance.gameManager.Guess(number, false);
+
+            switch (response)
             {
-                
+                case(Response.LOWER):
+                    _guessCeil = number - 1;
+                    break;
+                case(Response.HIGHER):
+                    _guessFloor = number + 1;
+                    break;
+                case(Response.CORRECT):
+                    break;
+            }
+        }
+
+        public void StartGuessing()
+        {
+            var aiGuesser = new ThreadStart(AsyncGuesser);
+            aiGuesser.Invoke();
+        }
+
+        private void AsyncGuesser()
+        {
+            while (Program.instance.gameManager.isGameRunning)
+            {
+                if (_guessCeil - _guessFloor < 20)
+                {
+                    var guess = random.Next(_guessFloor, _guessCeil);
+                    Guess(guess);
+                    TextUtils.SendAIMessage(guess.ToString());
+                }
+                else
+                {
+                    var guess = _guessFloor + (_guessCeil - _guessFloor) / 2;
+                    Guess(guess);
+                    TextUtils.SendAIMessage(guess.ToString());
+                }
+
+                Thread.Sleep(1000 * 3);   
             }
         }
     }
