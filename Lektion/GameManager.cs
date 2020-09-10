@@ -16,7 +16,7 @@ namespace Lektion
         public Guesser player;
         public Guesser ai;
 
-        private bool isGameRunning;
+        public bool isGameRunning;
 
         public void StartGame()
         {
@@ -30,9 +30,9 @@ namespace Lektion
         public Response Guess(int number, bool isPlayer)
         {
             if (number > correctNumber)
-                return Response.HIGHER;
-            if (number < correctNumber)
                 return Response.LOWER;
+            if (number < correctNumber)
+                return Response.HIGHER;
 
             if (isPlayer)
             {
@@ -44,11 +44,6 @@ namespace Lektion
             Console.WriteLine("The AI won!");
             isGameRunning = false;
             return Response.CORRECT;
-        }
-
-        public Response Guess(int number)
-        {
-            throw new NotImplementedException();
         }
     }
 }

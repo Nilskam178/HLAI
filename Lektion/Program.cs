@@ -6,9 +6,16 @@
         public Guesser guesser { get; set; }
         public static Program instance { get; set; }
         
+        
+        
         public static void Main(string[] args)
         {
-            instance = new Program {gameManager = new GameManager(), guesser = new Guesser()};
+            Player _player = new Player();
+            instance = new Program();
+            instance.gameManager = new GameManager();
+            instance.guesser = new Guesser();
+            instance.gameManager.StartGame();
+            _player.StartGuessing();
         }
     }
 }
